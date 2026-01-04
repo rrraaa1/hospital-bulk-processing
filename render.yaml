@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: hospital-bulk-api
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: HOSPITAL_API_URL
+        value: https://hospital-directory.onrender.com
+      - key: MAX_HOSPITALS_PER_BATCH
+        value: 20
+      - key: API_TIMEOUT
+        value: 30
+      - key: MAX_RETRIES
+        value: 3
+      - key: DEBUG
+        value: false
+      - key: PYTHON_VERSION
+        value: 3.11.0
+    healthCheckPath: /health
